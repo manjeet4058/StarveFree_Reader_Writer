@@ -1,0 +1,27 @@
+Writer_Process{
+        wait(entry); //will wait until all writer or reader before it complete
+        wait(wrt); //will wait until all writer or reader before it complete
+
+            --perform writing
+
+        signal(wrt);   // allow others to read or write
+        signal(entry); // allow entry of other process
+}
+
+Reader_Process{
+        wait(entry); //will wait until all writer before it complete
+
+        wait(mutex); // wait till any other reader is accessing critical section(readcount)
+        readcount++;
+        if(readercount==1) wait(wrt);//1st reader will set wrt 1 to 0
+        signal(mutex); // free critical section
+
+        signal(entry);
+
+            --reading is performed
+
+        wait(mutex);
+        readcount--;
+        if(readercount==0) signal(wrt);//wrt will be set to 1 if last reader or reader just before writer from process queue exits
+        signal(mutex);
+ }
