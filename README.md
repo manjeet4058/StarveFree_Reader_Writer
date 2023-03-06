@@ -11,4 +11,4 @@
 
 
 Intitially mutex=1, wrt=1,entry=1                                                                                                                                         
-                             readcount=0
+                                               readcount=0
